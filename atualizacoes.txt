@@ -1,0 +1,531 @@
+Versão 8.5.15
+* Módulo de PDCL
+
+Versão 8.5.14
+* Relatório de projetos - Planilha de Custos
+* Campos de texto com formatação agora aceitam Ctrl+V de imagens externas
+
+Versão 8.5.13
+* Detalhe do recursos com mais abas de calendário e gantt
+* Arquivos anexados agora ficam todos por data na pasta arquivos
+* Melhoria no controle de despachos
+
+Versão 8.5.12
+* Novo sub módulo de perfil de acesso: Valor de Indicador, para usuários que devem apenas atualizar valores de indicadores.
+* Indicadores agora tem a possibilidade de definirem prazos para lançamentos dos valores.
+* Tarefas tem agora opções de exportar link e dashboard automático.
+* Planilha de custo e gasto podem importar valores de outras tarefas/projetos.\azx
+
+Versão 8.5.11
+* Novo módulo de registro de ocorrência (menu=>Registro de ocorrência) voltado para uso por fornecedores. Pode-se criar um perfil com acesso exclusivo a ele de forma a não deixar o fornecedor navegar no projeto, mas ainda assim, de forma extremamente simplificada, poder inserir registro de ocorrência nas tarefas em que participa ou é responsável.
+* Melhoria na notificação de evento
+* Filtragem por projeto na lista de tarefas
+* Na aba de tarefas no detalhe de projeto há um símbolo de impressora para imprimir as tarefas. As colunas a serem exibidas são as mesmas configuradas em projetos=>tarefas=>ícone campos
+* Na impressão de relatórios a partir de detalhe de projeto aparece agora as seguintes opções:
+ - Cronograma Físico Financeiro
+ - Dicionário da EAP
+ - Estrutura Analítica
+
+Versão 8.5.10
+* Clonagem de TR
+* Clonagem de lição aprendida
+
+Versão 8.5.09
+* Mudança dos níveis de acesso, criando nível intermediário onde a equipe do objeto pode relacionar outros objetos, mas apenas o responsável edita e exclui o objeto principal 
+
+Versão 8.5.08
+* Lista de atas pode exibir coluna de participantes e participantes externos
+
+Versão 8.5.07
+* Detalhe de todos os objetos tem opção de inserir e exibir relacionamento aos demais objetos
+* Lista de tarefas refeito
+* Termo de abertura pode ser criado utilizando informação de project model canvas
+* GUT de campo de SWOT e Risco representa agora também questões positivas
+
+Versão 8.5.06
+* Itens de custos de demandas, são repassados a estudos de viabilidade, termos de abertura de projetos
+* Estudos de viabilidade e termos de abertura de projetos podem se relacionar a outros objetos
+
+Versão 8.5.05
+* Lista centralizada de registros de ocorrências
+* Lista centralizada de termos de aberturas de projetos
+
+Versão 8.5.04
+* Criado em painel de indicador o campo Legenda Vertical e Exibir Valor
+* Lista de contatos permite escolher colunas e tem duas formas de exibição
+
+Versão 8.5.03
+* O Filtro de relacionamento na lista dos objetos permite agora seleção múltipla
+* Seleção de departamento/seção tem campo de pesquisa por texto
+* Lições aprendidas aparecem em abas dos objetos aos quais estão relacionadas
+
+Versão 8.5.02
+* Em todos os objetos pode-se escolher quais colunas mostrar na lista dos mesmos
+* Programas podem se relacionar aos outros objetos do sistema
+* Caixa "Sobre" apresenta este arquivo texto
+* Criado o relatório Resumo das informações importadas do SIAFI/FIPLAN (detalhes do projeto=>impressão)
+
+Versão 8.5.01
+* Em todos os objetos na parte de gestão é possível escolher quais colunas mostrar na lista dos mesmos
+* Recursos podem ser relacionados a outros objetos
+
+Versão 8.5.00
+* Alocação de recurso inteiramente refeito. 
+* Agora não é necessário ter permissão de editar recurso para alocar na tarefa.
+* Recursos alocados não estão mais atrelados a duração total das tarefas
+* Módulo de pendências (problemas) tem inserção rápida de status e progresso
+* Na lista de pendências (problemas) pode ser escolhido quais colunas mostrar
+
+Versão 8.4.63
+* Planos de ação tem lista de ações
+* Lista de ações podem ter status e percentagem mudados nos mesmos moldes de atas de reunião
+
+Versão 8.4.62
+* Painel, odômetro e composição de painéis tem relacionamento aos demais objetos
+* Painel, odômetro e composição de painéis tem link interno a todos os objetos
+* Indicador de valor de projeto agora tem opção de mostrar a pontuação total de priorização de projeto
+
+Versão 8.4.61
+* Todos os principais objetos têm priorização e sistemática de aprovação
+
+Versão 8.4.60
+* Moeda estrangeira
+
+Versão 8.4.59
+* Sistema de Favoritos em todos os principais objetos.
+* Possibilidade de Administrador geral criar favoritos para terceiros
+* Possibilidade de travar filtros nas listas de objetos
+
+Versão 8.4.57
+* Sistema de percentagem automática para riscos e resposta a riscos
+* Integração com o SIAFI para FAB
+* Padronização de cabeçalho da impressão de detalhe dos objetos
+* Quase todos os objetos tem agora a opção de exportação de link dos detalhes dos mesmos
+
+Versão 8.4.56
+* Criado objeto Matriz SWOT, que é uma composição de campos SWOT
+* Impressão da lista de objetos com cabeçalho padronizado
+* Novo formato de odômetro a escolher 
+
+Versão 8.4.55
+* Campo de Organizações envolvidas em Estudo de Viabilidade, Termo de Abertura e Lacuna de Indicadores
+* Campos dos Formulários - Projeto, incluído o campo "Projeto Superior"
+* Opção de só poder  mudar progresso das tarefas através de registro de ocorrência
+* Opção de tempo corrido em gasto com recurso nas tarefas
+
+
+Versão 8.4.54
+* Seleção de objeto (ex:checklist, meta, etc.) agora conta com pesquisa por palavra chave
+* Risco agora tem campo de gatilho
+* Sistemática de aprovação de registro de ocorrência de tarefa (projeto deverá ter o campo aprovar registro marcado)
+* Objeto meta por ser relacionada a outra meta
+* Objeto meta pode ter valores cadastrados para períodos distintos
+
+Versão 8.4.53
+* Eliminado o valor de campo de sistema UnidadeTarefa. Agora tarefas usam o campo TipoUnidade 
+* Todos os custos e gastos podem agora ter campos texto de código, fonte e região (habilitar em campos de formulários => valor)
+* Slideshow de painéis podem ser alternados manualmente (basta o tempo de transição ser 0)
+* Link externo de árvore de gestão e árvore de portfólio apresenta agora cabeçalho
+* Caixa de dica (tooltip) de projeto apresenta mais informação
+* Lista de indicadores pode ter as colunas definidas pelo usuário
+
+
+Versão 8.4.52
+* Pendências aparecem agora no calendário
+* Aumento expressivo de objetos que agora tem campo customizado
+* Ações das Atas podem ter percentagens, status e observações alteradas mesmo após a aprovação da ata, estando habilitando ou não a opção de travar edição.
+
+Versão 8.4.51
+* Pesquisa de indicadores foi significativamente melhorada
+* Modelos de artefatos de projeto podem retornar ao estado original de "fábrica", para caso de erro de cliente
+* Link externo de dashbord geral de projeto
+* Link externo de detalhes do projeto
+* Link externo de árvore de portfólio
+
+Versão 8.4.50
+* Indicador de fórmula pode usar um indicar deslocado de N períodos
+* Exportação para Excel da lista de instrumentos jurídicos
+
+Versão 8.4.48
+* Inclusão de usuário(s) agora tem pesquisa por grupo de mensagem
+* Aba de assinaturas em À Fazer
+* Sistema de aprovação para Plano de Ação e Estudo de Viabilidade
+
+Versão 8.4.47
+* Link externo para gráfico Gantt do projeto
+* Abas de Pendências e Ações de Atas de Reunião na tela À Fazer
+* Melhoria na interface de edição de ações de plano de ação
+* Criado árvore de portfólios (projeto=>relatórios=>árvore de portfólios)
+* Notificação de criação/edição de projeto foi expandida e melhorada 
+
+Versão 8.4.46
+* Gráfico do detalhe de indicador representa corretamente a pontuação (omite a meta)
+* Completada as opções de sub módulo da parte de gestão e projetos de forma a poder customizar completamente estas partes do menu. Nas próximas versões todo o resto do sistema será revisado.
+
+Versão 8.4.45
+* Modelos de artefatos de projetos e documentos podem agora ser editados de dentro do sistema
+* Detalhes do plano de ação mostra código de cor para as ações nos mesmos moldes das tarefas de projeto
+* Edição in-line do HTML dos modelos de documentos de e-mail
+* Edição in-line do HTML dos modelos de artefatos
+* Novo relatório de projetos em que se pode escolher quais colunas mostrar (Lista de Campos de Projeto Customizada)
+* Valores de campos customizados do tipo seleção agora podem ter uma cor relacionada (pode usar no relatório citado acima)
+
+Versão 8.4.44
+* projetos/tarefas sucessores (dependências externas) agora são representados no gráfico Gantt
+* Link externo agora força sempre a utilização de perfil observação, por segurança
+
+Versão 8.4.43
+* Árvore de gestão contém novas opções de configuração da exibição
+* Simplificação do Termo de Referência
+* Possibilidade de exportação rápida de link para exibição de indicadores, painéis, composição de painéis, odômetros e slideshow
+* Favorito pode ser configurado para ser a tela inicial ao logar no sistema
+
+Versão 8.4.42
+* Custos das demandas podem ser aprovados
+* Há um sub módulo de projeto para custos de demandas (perfil de acesso)
+* Termo de Referência importa custos de demandas
+
+Versão 8.4.41
+* Criado o módulo de gestão Medida Estratégica, que pode ser encarado como um sub objetivo estratégico. O mesmo se vincula ao objetivo estratégico.
+* Módulos de Medida Estratégica e Fatores Críticos podem ser desabilitados.
+* Aprovação de Ata de Reunião e Termo de Referência podem bloquear edição dos mesmos (configuração através da interface de módulos)
+
+Versão 8.4.40
+* Temas podem ser relacionados a múltiplas perspectivas
+* Objetivos estratégicos podem ser relacionados a múltiplos temas/perspectivas
+* Fatores críticos de sucesso não são mais obrigatórios e podem ser relacionados a múltiplos objetivos estratégicos
+* Iniciativas estratégicas podem ser relacionadas a múltiplos fatores/objetivos/temas/perspectivas, deixando de serem restritas a fatores críticos de sucesso
+
+Versão 8.4.39
+* Edição de fórmula de indicadores e composição foi melhorada.
+* Fórmula de indicadores consegue agora ligar com divisão por zero, dispensando artifícios tipo: I01/(I02+0.000001)
+
+Versão 8.4.38
+* Atas de reunião agora tem no menu a opção de controle das ações
+* Se a ata estiver aprovada poderá ser configurado para impedir a edição da ata de reunião
+* Campo de status da ação da ata de reunião foi acrescentado
+* Relatório de projetos para entregas de tarefas
+
+Versão 8.4.37
+* Agora em configuração de sistema pode-se escolher o fuso horário a ser considerado.
+
+Versão 8.4.36
+* As ações da ata de reunião agora tem data de início e termino, assim como percentual executado
+* As ações das atas de reunião podem ser vistas nos calendários anuais, mensais, semanais e diários
+* Indicador de valor de projeto ou tarefa agora tem a opção de porcentagem de deliberações de atas de reunião concluídas
+* Links para os objetos que são colocados no e-mail agora podem demandar que se insira o login e senha em vez de ser completamente automático.
+
+Versão 8.4.35
+* Todos os objetos do sistema agora podem ter organização participante
+
+Versão 8.4.34
+* Mensagem do tipo atividade poderá ter o prazo limite de execução mudado pelo remetente.
+* Controle de mensagem do tipo de atividade indica quando o remetente/destinatário marcou para ignorar
+* Módulo de Metas (gestão) pode agora ter múltiplos vínculos
+* A instalação de módulo agora deixa por padrão ativo
+
+Versão 8.4.33
+* Sistema de assinatura e aprovação em atas de reunião no mesmo molde do termo de referência
+
+Versão 8.4.32
+* Selecionar quais organizações criam cada tipo de modelo de documento (ex: Ofício, memorando, etc.)
+* Indicadores do tipo checklist agora podem escolher entre a percentagem conseguida ou a soma dos pesos das respostas com sim
+* Módulo de Termo de Referência
+
+Versão 8.4.31
+* Edição da Ata de Reunião contem pautas e ações
+* Novo campo de participantes, para diferenciar de designados da ata de reunião
+* Responsável pela Ata não é mais considerado um dos participantes
+
+Versão 8.4.30
+* Painel de indicadores, odômetros e composições de painéis podem ser vinculados aos demais módulos.
+* Planilhas de custo, planilhas de gasto, gasto de mão de obra e gasto de recurso só aparecem no financeiro do projeto/tarefa após serem aprovados.
+* Na interface de aprovação mencionada acima agora há opção de manter um histórico de observações registradas.
+
+Versão 8.4.29
+* Para prefeituras e órgãos estaduais, agora é possível editar as fontes pagadoras de custos (sub elemento de despesa), bastando ir em Sistema=>Elementos de Despesa
+
+Versão 8.4.28
+* Planejamento estratégico agora se comporta como os outros módulos, com lista dos mesmo, etc.
+* Simplificado o uso de indicadores de modo a não mais ser necessário vinculação a um ano específico
+
+Versão 8.4.27
+* Basicamente todos os módulos podem ser vinculados aos demais módulos. (Ex: Um arquivo poderá ter um link relacionado que por sua vez tem um projeto relacionado, AD INFINITVM)
+* Módulo de documento pode ser vinculado a múltiplos objetos
+* Botão de retornar na barra de menu, mantendo todo o histórico de navegação
+* Práticas de gestão e indicadores com aba de inativos
+
+Versão 8.4.26
+* Correções Diversas
+
+Versão 8.4.25
+* Mensagens podem ter vinculações múltiplas
+* Pequena mudança na interface de mensagens
+* Mensagens do tipo atividade podem ter prazos diferentes para cada destinatário
+* Relatório de projetos com opções de gráficos por municípios envolvidos
+
+Versão 8.4.24
+* Correções Diversas
+Versão 8.4.23
+* Correções Diversas
+
+Versão 8.4.22
+* Correções Diversas
+
+Versão 8.4.21
+* Melhorias no sistema de demandas e indicadores
+* Correções Diversas
+
+Versão 8.4.20
+* Adicionado campo customizado do tipo data
+* Correções Diversas
+
+Versão 8.4.19
+* Correções Diversas
+
+Versão 8.4.18
+* Correções Diversas
+
+Versão 8.4.17
+* Baseline para os artefatos da NEGAPEB
+* Diversos botões de criar e favoritos foram transformados em ícones
+* Melhorada a seleção única de usuário/contato
+* Registro de ocorrência em perspectiva com opção de anexar arquivos
+
+Versão 8.4.16
+* Padronização das caixas de texto com formatação
+* Botão de filtrar com departamentos subordinados incluídos
+* Mudança na sistemática de perfil de aceso
+* Sistema de indicadores de bases externas
+* Lições aprendidas com campo de status e data.
+* Diversas opções de filtragem da lista de lições aprendidas
+* Melhorada a caixa de filtrar das listas de objetos
+* Lista de arquivos com novos campos de filtragem e retirada e arquivos funcionando
+* Diversas melhoras no Project Model Canvas
+* Sistema de porcentagem automática da gestão estratégica baseado nos elemento subordinados ou na conclusão dos projetos vinculados
+* Ao logar no gpweb as sessões abertas do usuário doutro computador/navegador são encerradas, ou seja, não pode haver duas sessões do mesmo usuário abertas ao mesmo tempo.
+* Relatório "Conclusão de tarefa" recebeu as colunas designado e início da tarefa.
+* As tarefas tendem a voltar ao ponto especificado pelo usuário quando foram alteradas devidas a cálculos de dependências
+* Na interface rápida agora há uma visualização de dependências sucessoras e predecessoras
+* Nas configurações do sistema há opção de definir como deverão se comportar as caixas de texto com formatação
+* Se habilitado nas configurações do sistema, haverá BDI(Benefícios e Despesas Indiretas) nas planilhas de custo e gasto
+* Corrigidas as falhas e segurança apontadas pelo CITEx
+
+Versão 8.4.15
+* Relatório dos custos e gastos dos objetos da gestão estratégica (perspectiva, tema, objetivo, fator crítico e iniciativa estratégica)
+* Monitorar a dependência entre os projetos
+* Workflow de aprovação de demanda com 3 níveis de aprovação
+* Identificação e mapeamento de equipes, perfis e competências dos envolvidos no projeto (CHA - Conhecimentos, Habilidades e Atitudes)
+* Modelos de projetos com equipes alocadas
+* Base histórica de riscos e respostas
+* Definição de Riscos
+* Gerenciamento centralizado de riscos por projeto ou projetos
+* Análise qualitativa e definição de estratégia de resposta a riscos
+* Criação de componentes de respostas aos riscos integrados à EAP
+* Cálculo de custos das respostas aos riscos
+* Lista de Riscos identificados e priorizados
+
+Versão 8.4.14
+* Gerenciamento centralizado de conhecimento, habilidades e atitudes dos recursos (CHA)
+* Lista de todos os projetos que o funcionário trabalhou com funções desempenhadas em cada um
+* Relatório de Horas por Recurso: por período, tipo de atividade e projeto
+* Evento de calendário permite agora a vinculação de múltiplos arquivos de uma só vez
+* Instrumento jurídico agora tem arquivos, registro de ocorrência, e cadeia de aprovação
+* EAP gráfica interativa, tanto na vertical quanto na horizontal
+* módulo instalado dentro do MS Project Profissional 2013, para importação, exportação e sincronização de projetos
+
+Versão 8.4.13
+* Seleção de todas as tarefas, na aba de tarefas, dentro do detalhe do projeto
+* Novo nível de acesso - Protegido II - Onde todos podem ver o objeto, mas apenas o responsável pelo mesmo pode editar
+
+Versão 8.4.12
+* Gerenciamento de programas
+* Exportar resumos dos projetos, para consulta por outros sistemas, para a tabela MySQL projeto_resumo com os seguintes campos:
+			*projeto_id
+			*nome
+			*organizacao
+			*indicador
+			*codigo
+			*setor
+			*segmento
+			*intervencao
+			*tipo_intervencao
+			*categoria
+			*oque
+			*porque
+			*como
+			*onde
+			*inicio
+			*termino
+			*termino_atualizado
+			*gerente
+			*supervisor
+			*autoridade
+			*cliente
+			*url
+			*www
+			*custo_inicial
+			*custo
+			*gasto
+			*gasto_mo
+			*estimado_mo
+			*estimado_total_mo
+			*estimado_recurso
+			*estimado_total_recurso
+			*gasto_extra
+			*custo_previsto
+			*vel_financeiro
+			*financeiro_alocado
+			*total_estimado_hoje
+			*total_estimado_final
+			*gasto_total
+			*status
+			*acesso
+			*prioridade
+			*progresso
+			*fisico_previsto
+			*vel_fisico
+			*ativo
+			*horas_trab
+			*horas_registro
+			*horas_projeto
+			*homem_hora
+			*endereco
+			*latitude
+			*observacao
+* Exportar link de favorito.
+		
+Versão 8.4.11
+* Plano de ação se vincula a múltiplos objetos de gestão
+
+Versão 8.4.10
+* Perspectiva estratégica com os módulos de eventos, arquivos, links, etc.
+* Todos os objetos de gestão tem agora as abas de plano de ação e ata de reunião.
+
+Versão 8.4.9
+* Refeito o sistema de elemento e sub-elemento de despesa para contemplar a lista de 12000 códigos do governo federal
+* Criado relatório de dotação orçamentária por Natureza de Despesa e PI
+* A impressora de detalhe de projeto agora tem novas opções de impressão
+* Tarefas pai agora condensam as áreas das tarefas filhas, tal como já ocorria com custos e gastos
+
+Versão 8.4.7
+* Na lista de arquivos agora há a opção de realizar cópia dos arquivos listados para outro objeto selecionado (ex: projeto, indicador, plano de ação, etc.).
+
+Versão 8.4.6
+* Plano de ação agora tem opção de percentagem nos itens, podendo os mesmos levarem a um cálculo do progresso do plano de ação através de média ponderada.
+
+Versão 8.4.5
+* Slide show de painéis de indicadores agora tem um novo campo de tempo entre recálculos dos valores dos indicadores envolvidos.
+
+Versão 8.4.4
+* Refeito o módulo de problemas/pendências, tendo agora múltiplas vinculações na gestão, registros e ocorrências e abas nos outros objetos pertinentes. Caso esteja com o mesmo instalado é necessário atualiza-lo através de sistema=>módulos
+
+Versão 8.4.3
+* Em Sistema agora há a opção de relatório constando o último acesso de cada usuário.
+* Em sistema agora há a opção de replicar a auto avaliação para 2014, assim como as práticas de gestão e indicadores.
+
+Versão 8.4.2
+* Planejamento da gestão estratégica agora pode ser definido por seção/departamento. Para tanto agora há o campo seção/departamento responsável nos objetos da gestão estratégica. Para futura versão haverá BSC também por seção/departamento.
+* Todos os objetos da gestão estratégica agora são listados em abas, para diferenciar os objetos ativos dos inativos.
+
+Versão 8.4.1
+* Pauta de pontuação da FNQ de 1000 para 2014
+* Relatório de lacuna de adequação para as práticas de gestão
+
+Versão 8.3.29
+* Sistema de edição e criação de Pauta de BSC
+* Impressão de gráfico de áreas do projeto com opção de visualização de status, além de novas opções de filtragem
+* Opção de marcar indicadores, projetos e tarefas que deseja utilizar no sistema de alertas
+* Sistema de alerta com opção de escolha de intervalo entre alertas sucessivos sobre o mesmo assunto.
+* Slide show de painéis de indicadores.
+
+Versão 8.3.29
+* Melhoria da exportação dos gráficos de indicadores para o formato Excel
+* Arrumado os problemas reportados
+
+Versão 8.3.28
+* Adicionado novas possibilidades das configurações de tela inicial para os usuários
+* Adicionado opção de vincular arquivos com opções de checklist
+* Arrumado os problemas reportados
+
+Versão 8.3.27
+* Adicionado possibilidade de integrar os eventos do calendário do gpweb em um calendário do Outlook ou Google Calendar
+
+Versão 8.3.27
+* Adicionado exportação de calendário para formato ical
+
+Versão 8.3.26
+* Otimização do calendário
+
+Versão 8.3.25
+* Arrumado os problemas reportados
+
+Versão 8.3.24
+* Em configurações do sistema agora há o checkbox "Ocultar valor da hora de trabalho" que caso marcado impede os usuários comuns de verificarem e editarem os valores padrão de hora de trabalho definidos.
+* Na edição de indicador há o novo checkbox "Pontuação do último período" que caso marcado (é o padrão) considera apenas o período anterior para o resultado do indicador (ex: período ano, considerará só os valores de 2012 para trás)
+
+Versão 8.3.23
+* Módulo problemas agora se chama pendências
+* Criado módulo de agrupamento que serve como uma amplificação de lista de projetos favoritos. No momento foram incluídas duas interfaces mas a tendência é aumentar no futuro.
+* Acrescentado o campo situação atual à tarefa (REDUNDANTE campo pendência e modulo pendência)
+
+Versão 8.3.22
+* Alerta para tarefas em atraso
+* Opção de supervisor dos projetos receber Alerta
+* Empenho, liquidação e pagamento para gastos nos projetos
+
+Versão 8.3.21
+* Sistema de gerenciamento de projetos do Exército
+* Relatório de designados por tarefas
+* Filtros de gestão para lista de projetos e relatórios de projetos
+
+Versão 8.3.20
+* Mais informação na lista de integrantes de projeto
+* Cliente no detalhe de projeto
+* Aba de entregas nas tarefas
+
+Versão 8.3.19
+* Opção de negar acesso na criação de perfis de acesso
+* Sistema de classificação de prioridade de projetos
+* Aviso para novos designados nas tarefas
+* Painéis e odômetro agora podem ter links internos e externos ao se clicar no título dos mesmos
+
+Versão 8.3.18
+* Ocultado pronome de tratamento das pessoas (ex: Sr., Sra.)
+* Seleção de usuário/contato com opção de lista simples
+* Indicadores de valores de tarefas
+* Mudança em batch de valores de tarefas agora tem Setor, segmento, intervenção e tipo de intervenção
+* Novo menu em detalhes do projeto, devido a necessidade de novos comandos o formato com botões tornou-se extremamente  inadequado, sendo necessário uma nova solução.
+* Folha ponto e cronômetro por padrão não mostram mais as tarefas que já foram concluídas (percentual >= 100%)  porem foi adicionada a opção de incluir as tarefas concluídas na lista.
+* Arrumado os problemas reportados
+
+Versão 8.3.17
+* Visualização de gastos extras no aprovar mão de obra e aprovar recurso.
+* Indicador de projeto para:
+    - Quantidade adquirida
+    - Quantidade prevista
+    - Quantidade realizada
+    - Quantidade realizada pela prevista (%)
+    - Quantidade adquirida pela prevista (%)
+    - Gasto de mão de obra
+    - Gasto de recurso
+* Sistema de filtro para todos os  indicadores de projeto
+* Lista de projetos tem novo filtro com opção de ver projeto em que participa (útil quando o projeto é de outra organização à qual não tem acesso)
+* Arrumado os problemas reportados
+
+Versão 8.3.16
+* Valor agregado, IDC e IDP no detalhe do projeto
+* Indicador de projeto tem a opção de valor agregado, IDC e IDP
+* Curva S do financeiro tem agora a opção de totais planejados e gastos, além de valor agregado
+* Relatório de status de projeto põe agora ocultar a coluna contato
+* A lista de projetos pode agora ser filtrada pelo critério de BSC (o projeto precisa estar vinculado a uma prática de gestão)
+* Anexar arquivos nos registros das tarefas
+* Arrumado os problemas reportados
+
+Versão 8.3.15
+* Adicionado configuração do logotipo na parte de configurações do sistema.
+* Adicionado configuração do brasão a ser utilizados nos relatórios na parte de configurações do sistema.
+* Criada uma pasta para uso dos usuários no armazenamento de imagens customizadas (<pasta do gpweb>/server/estilo/customizado),  evitando sobreposição durante atualizações.
+* Iniciado compatibilização com IE 10
+* Melhorias no detalhe do projeto e indicadores
+* Arrumado os problemas reportados

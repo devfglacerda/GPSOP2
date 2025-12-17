@@ -1,0 +1,365 @@
+<?php
+/**
+ * gpweb - Sistema de Gerenciamento de Projetos
+ *
+ * Copyright (c) 2007-2011 The web2Project Development Team <w2p-developers@web2project.net>
+ * Copyright (c) 2003-2007 The dotProject Development Team <core-developers@dotproject.net>
+ * Copyright (c) 2008 Sérgio Fernandes Reinert de Lima
+ *
+ * Este programa é software livre; você pode redistribuí-lo e/ou modificá-lo sob os termos da
+ * Licença Pública Geral GNU versão 2, publicada pela Free Software Foundation.
+ *
+ * Este programa é distribuído na esperança de que seja útil, mas SEM NENHUMA GARANTIA.
+ * Veja a Licença Pública Geral GNU para mais detalhes: www.softwarepublico.gov.br
+ */
+
+if (!defined('BASE_DIR')) {
+    die('Acesso não autorizado.');
+}
+
+// Configurações globais e inicialização
+global $Aplic, $cal_sdf, $ver_todos_projetos;
+$Aplic->carregarCalendarioJS();
+
+// Parâmetros da requisição
+$projeto_id = getParam($_REQUEST, 'projeto_id', 0);
+$mostrarNomeProjeto = nome_projeto($projeto_id);
+$fazer_relatorio = getParam($_REQUEST, 'fazer_relatorio', 0);
+$reg_data_inicio = getParam($_REQUEST, 'reg_data_inicio', 0);
+$reg_data_fim = getParam($_REQUEST, 'reg_data_fim', 0);
+$usuario_id = getParam($_REQUEST, 'usuario_id', $Aplic->usuario_id);
+$log_pdf = getParam($_REQUEST, 'log_pdf', 0);
+$usar_periodo = getParam($_REQUEST, 'usar_periodo', 0);
+
+$data_inicio = intval($reg_data_inicio) ? new CData($reg_data_inicio) : new CData(date('Y') . '-01-01');
+$data_fim = intval($reg_data_fim) ? new CData($reg_data_fim) : new CData(date('Y') . '-12-31');
+if (!$reg_data_inicio) $data_inicio->subtrairIntervalo(new Data_Intervalo('14,0,0,0'));
+$data_fim->setTime(23, 59, 59);
+
+echo '<input type="hidden" name="fazer_relatorio" value="0" />';
+
+$data = new CData();
+
+$titulo = 'Demandas - Vistorias';
+
+if (!$dialogo) {
+    echo '<table width="100%">';
+    echo '<tr><td width="22"> </td>';
+    echo '<td align="center"><h2>' . $titulo . '</h2></td>';
+    echo '<td width="32">' . dica('Imprimir o relatório', 'Clique neste ícone para imprimir.') . '<a href="javascript: void(0);" onclick="env.target=\'popup\'; env.dialogo.value=1; env.pdf.value=0; env.sem_cabecalho.value=0; env.submit();"><img src="' . acharImagem('imprimir.png') . '" border="0" width="32" height="32" /></a>' . dicaF() . '</td>';
+    echo '</tr>';
+    echo '</table>';
+} else {
+    echo '<h2>' . $titulo . '</h2>';
+}
+
+if (!$dialogo) {
+    echo estiloTopoCaixa();
+    echo '<table cellspacing="0" cellpadding="4" border="0" width="100%" class="filtro-tabela">';
+    echo '<tr>';
+    echo '<td align="left" style="white-space: nowrap">';
+    echo dica('Data Inicial', 'Escolha a data de início da pesquisa.') . 'De: ' . dicaF() . '<input type="hidden" name="reg_data_inicio" id="reg_data_inicio" value="' . ($data_inicio ? $data_inicio->format('%Y%m%d') : '') . '" /><input type="text" name="data_inicio" style="width:70px;" id="data_inicio" onchange="setData(\'env\', \'data_inicio\');" value="' . ($data_inicio ? $data_inicio->format('%d/%m/%Y') : '') . '" class="texto" />' . '<a href="javascript: void(0);"><img id="f_btn1" src="' . acharImagem('calendario.gif') . '" style="vertical-align:middle" width="18" height="12" alt="Calendário" border="0" /></a>';
+    echo dica('Data Final', 'Escolha a data final da pesquisa.') . 'Até: ' . dicaF() . '<input type="hidden" name="reg_data_fim" id="reg_data_fim" value="' . ($data_fim ? $data_fim->format('%Y%m%d') : '') . '" /><input type="text" name="data_fim" id="data_fim" style="width:70px;" onchange="setData(\'env\', \'data_fim\');" value="' . ($data_fim ? $data_fim->format('%d/%m/%Y') : '') . '" class="texto" />' . '<a href="javascript: void(0);"><img id="f_btn2" src="' . acharImagem('calendario.gif') . '" style="vertical-align:middle" width="18" height="12" alt="Calendário" border="0" /></a>';
+    echo dica('Filtro por Usuário', 'Selecione o usuário.') . 'Usuário: ' . dicaF() . '<input type="hidden" id="usuario_id" name="usuario_id" value="0" /><input type="text" id="nome_usuario" name="nome_usuario" value="' . nome_om($usuario_id, $Aplic->getPref('om_usuario')) . '" style="width:284px;" class="texto" readonly /><a href="javascript: void(0);" onclick="popUsuario();">' . imagem('icones/usuarios.gif', 'Selecionar Usuário') . '</a>';
+    echo '<input type="checkbox" style="vertical-align:middle" name="usar_periodo" id="usar_periodo" ' . ($usar_periodo ? 'checked="checked"' : '') . ' />' . dica('Usar o Período', 'Usar faixa de tempo selecionada.') . 'Usar o período' . dicaF();
+    echo '</td>';
+    echo '<td align="right" style="white-space: nowrap">' . botao('exibir', 'Exibir', 'Exibir resultado da pesquisa.', '', 'env.fazer_relatorio.value=1; env.target=\'\'; env.dialogo.value=0; env.sem_cabecalho.value=0; env.pdf.value=0; env.submit();') . '</td>';
+    echo '</tr>';
+    echo '</table>';
+}
+
+if ($fazer_relatorio || $dialogo) {
+    $sql = new BDConsulta;
+
+    $lista_projetos = false;
+    if ($Aplic->profissional && $projeto_id) {
+        require_once BASE_DIR . '/modulos/projetos/funcoes_pro.php';
+        $vetor = ($projeto_id ? array($projeto_id => $projeto_id) : array());
+        portfolio_projetos($projeto_id, $vetor);
+        $lista_projetos = implode(',', $vetor);
+    }
+
+    $sql->adTabela('tarefas', 't');
+    $sql->esqUnir('projetos', 'pr', 't.tarefa_projeto = pr.projeto_id');
+    $sql->esqUnir('usuarios', 'u', 'pr.projeto_responsavel = u.usuario_id');
+    $sql->esqUnir('cias', 'cias', 'pr.projeto_cia = cias.cia_id');
+    $sql->esqUnir('contatos', 'ct', 'ct.contato_id = u.usuario_contato');
+    $sql->esqUnir('tarefa_depts', 'tp', 'tp.tarefa_id = t.tarefa_id');
+    $sql->adOnde('tarefa_tipo = 3');
+    $sql->esqUnir('depts', 'depts', 'depts.dept_id = tp.departamento_id');
+    $sql->adOnde('pr.projeto_template=0 OR pr.projeto_template IS NULL');
+    $sql->adOnde('tarefa_percentagem < 100');
+
+    if ($filtro_criterio || $filtro_perspectiva || $filtro_tema || $filtro_objetivo || $filtro_fator || $filtro_estrategia || $filtro_meta) {
+        $sql->esqUnir('projeto_gestao', 'projeto_gestao', 'pr.projeto_id=projeto_gestao_projeto');
+    }
+
+    if ($filtro_criterio) {
+        $sql->esqUnir('pratica_nos_marcadores', 'pratica_nos_marcadores', 'pratica_nos_marcadores.pratica=projeto_gestao.projeto_gestao_pratica');
+        $sql->esqUnir('pratica_marcador', 'pratica_marcador', 'pratica_marcador.pratica_marcador_id=pratica_nos_marcadores.marcador');
+        $sql->esqUnir('pratica_item', 'pratica_item', 'pratica_item.pratica_item_id=pratica_marcador.pratica_marcador_item');
+    }
+
+    if ($filtro_criterio || $filtro_perspectiva || $filtro_tema || $filtro_objetivo || $filtro_fator || $filtro_estrategia || $filtro_meta) {
+        $filtragem = [];
+        if ($filtro_criterio) $filtragem[] = 'pratica_item_criterio IN (' . $filtro_criterio . ')';
+        if ($filtro_perspectiva) $filtragem[] = 'projeto_gestao_perspectiva IN (' . $filtro_perspectiva . ')';
+        if ($filtro_tema) $filtragem[] = 'projeto_gestao_tema IN (' . $filtro_tema . ')';
+        if ($filtro_objetivo) $filtragem[] = 'projeto_gestao_objetivo IN (' . $filtro_objetivo . ')';
+        if ($filtro_fator) $filtragem[] = 'projeto_gestao_fator IN (' . $filtro_fator . ')';
+        if ($filtro_estrategia) $filtragem[] = 'projeto_gestao_estrategia IN (' . $filtro_estrategia . ')';
+        if ($filtro_meta) $filtragem[] = 'projeto_gestao_meta IN (' . $filtro_meta . ')';
+        if (count($filtragem)) $sql->adOnde(implode(' OR ', $filtragem));
+    }
+
+    if ($estado_sigla) $sql->adOnde('pr.projeto_estado=\'' . $estado_sigla . '\'');
+    if ($municipio_id) $sql->adOnde('pr.projeto_cidade IN (' . $municipio_id . ')');
+    if (!$portfolio && !$portfolio_pai) $sql->adOnde('pr.projeto_portfolio IS NULL OR pr.projeto_portfolio=0');
+    elseif ($portfolio && !$portfolio_pai) $sql->adOnde('pr.projeto_portfolio=1 AND (pr.projeto_plano_operativo=0 OR pr.projeto_plano_operativo IS NULL)');
+    if ($portfolio_pai) {
+        $sql->esqUnir('projeto_portfolio', 'projeto_portfolio', 'projeto_portfolio_filho = pr.projeto_id');
+        $sql->adOnde('projeto_portfolio_pai = ' . (int)$portfolio_pai);
+    }
+    if ($favorito_id) {
+        $sql->internoUnir('favorito_lista', 'favorito_lista', 'pr.projeto_id=favorito_lista_campo');
+        $sql->internoUnir('favorito', 'favorito', 'favorito.favorito_id=favorito_lista_favorito');
+        $sql->adOnde('favorito.favorito_id IN (' . $favorito_id . ')');
+    }
+    if ($dept_id) $sql->adOnde('projeto_depts.departamento_id IN (' . $dept_id . ')');
+    if ($cia_id && !$lista_cias && !$favorito_id) $sql->adOnde('pr.projeto_cia = ' . (int)$cia_id);
+   else $sql->adOnde('projeto_ativo = 1');	
+	if($dept_id) $sql->adOnde('projeto_depts.departamento_id IN ('.$dept_id.')');	
+	if ($cia_id  && !$lista_cias && !$favorito_id)	$sql->adOnde('pr.projeto_cia = '.(int)$cia_id);
+	elseif ($lista_cias && !$favorito_id) $sql->adOnde('pr.projeto_cia IN ('.$lista_cias.')');
+	if ($projeto_tipo > -1)	$sql->adOnde('pr.projeto_tipo IN ('.$projeto_tipo.')');
+	if ($projeto_setor) $sql->adOnde('pr.projeto_setor = '.(int)$projeto_setor);
+	if ($projeto_segmento) $sql->adOnde('pr.projeto_segmento = '.(int)$projeto_segmento);
+	if ($projeto_intervencao) $sql->adOnde('pr.projeto_intervencao = '.(int)$projeto_intervencao);
+	if ($projeto_tipo_intervencao) $sql->adOnde('pr.projeto_tipo_intervencao = '.(int)$projeto_tipo_intervencao);
+	if ($supervisor) $sql->adOnde('pr.projeto_supervisor IN ('.$supervisor.')');
+	if ($autoridade) $sql->adOnde('pr.projeto_autoridade IN ('.$autoridade.')');
+	if ($responsavel) $sql->adOnde('pr.projeto_responsavel IN ('.$responsavel.')');
+	if (trim($pesquisar_texto)) $sql->adOnde('pr.projeto_nome LIKE \'%'.$pesquisar_texto.'%\' OR pr.projeto_descricao LIKE \'%'.$pesquisar_texto.'%\' OR pr.projeto_objetivos LIKE \'%'.$pesquisar_texto.'%\' OR pr.projeto_como LIKE \'%'.$pesquisar_texto.'%\' OR pr.projeto_codigo LIKE \'%'.$pesquisar_texto.'%\'');
+	$sql->adOnde('projeto_template = 0');
+
+	$sql->adCampo('tarefa_percentagem, tarefa_prioridade, projeto_setor, t.tarefa_id, tarefa_projeto, tarefa_fim, tarefa_inicio, tarefa_duracao, projeto_nome, projeto_descricao, u.usuario_login, u.usuario_id, tarefa_dono, tarefa_tipo, tarefa_status');
+	if ($usuario_id > 0) {
+		$sql->esqUnir('tarefa_designados', 'ut', 'ut.tarefa_id = t.tarefa_id');
+		$sql->adOnde('ut.usuario_id ='.$usuario_id.' OR tarefa_dono='.$usuario_id);
+		}
+	if ($lista_projetos === false && $projeto_id != 0) $sql->adOnde('tarefa_projeto ='.$projeto_id);
+    else if($lista_projetos){
+        $sql->adOnde('tarefa_projeto IN ('.$lista_projetos.')');
+        }
+	$sql->adOnde('t.tarefa_dinamica = 0');
+	$sql->adOnde('tarefa_duracao > 0');
+	if ($usar_periodo){
+		$sql->adOnde('tarefa_fim >= \''.$data_inicio->format('%Y-%m-%d %H:%M:%S').'\'');
+		$sql->adOnde('tarefa_fim <= \''.$data_fim->format('%Y-%m-%d %H:%M:%S').'\'');
+		}
+	
+	
+	
+	$sql->adOrdem('projeto_setor ASC');
+	$sql->adOrdem('projeto_nome ASC');
+	
+	
+	
+	
+	$tarefas = $sql->ListaChave('tarefa_id');
+	$sql->limpar();
+	$primeira_tarefa = current($tarefas);
+	$atual_projeto_id = 0;
+	$primeira_tarefa = true;
+	$log = array();
+	
+	$vetor_nome=array();
+
+
+  
+
+    if (!$dialogo) echo '<tr><td>';
+    echo '<table cellspacing="0" cellpadding="4" border="0" class="relatorio-tabela" align="center">';
+    echo '<thead>';
+    echo '<tr align="center" style="background-color: #333; color: #fff;">';
+    echo '<th>Projeto</th>';
+    echo '<th>Nome Tarefa</th>';
+    echo '<th>Solicitante</th>';
+    echo '<th>Status</th>';
+    echo '<th>Data</th>';
+    echo '<th>Dias</th>';
+    echo '<th>Prioridade</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
+
+    $hrs = 'hrs';
+    $qnt = 0;
+    $current_date = new CData('2025-06-10 14:54:00'); // Ajustado para 02:54 PM -03
+    foreach ($tarefas as $tarefa) {
+        $qnt++;
+        $data_termino = $tarefa['tarefa_fim'] ? new CData($tarefa['tarefa_fim']) : null;
+        $data_inicio_tarefa = $tarefa['tarefa_inicio'] ? new CData($tarefa['tarefa_inicio']) : null;
+
+        // Calcular dias pendentes
+        $pending_days = 'N/A';
+        if ($data_inicio_tarefa) {
+            $start_date_str = $data_inicio_tarefa->format('%Y-%m-%d');
+            $current_date_str = $current_date->format('%Y-%m-%d');
+            $start_date = new DateTime($start_date_str);
+            $current_date_dt = new DateTime($current_date_str);
+            $interval = $current_date_dt->diff($start_date);
+            $pending_days = $interval->days;
+        }
+
+        if (!isset($vetor_nome[$tarefa['tarefa_dono']])) {
+            $vetor_nome[$tarefa['tarefa_dono']] = link_usuario($tarefa['tarefa_dono'], '', '', 'esquerda');
+        }
+
+        // Combinar Tipo e Projeto na mesma célula
+        $tipo_projeto = ($tarefa['tarefa_tipo'] && isset($tipo[$tarefa['tarefa_tipo']]) ? $tipo[$tarefa['tarefa_tipo']] : '') . link_projeto($tarefa['tarefa_projeto']);
+
+        // Solicitante: Usar projeto_setor com $tipo1
+        $tipo1 = getSisValor('Setor');
+
+        // Status: Usar mapeamento definido
+       $status = getSisValor('StatusTarefa');	
+	   $tipo = getSisValor('TipoTarefa');
+
+        echo '<tr>';
+        echo '<td align="center"><b>'.link_projeto($tarefa['tarefa_projeto']).'</b></td>';
+        echo '<td align="center">'.($tarefa['tarefa_tipo'] && isset($tipo[$tarefa['tarefa_tipo']]) ? $tipo[$tarefa['tarefa_tipo']] : '&nbsp;').'</td>';
+        echo '<td align="center" ><b>'.($tarefa['projeto_setor'] && isset($tipo1[$tarefa['projeto_setor']]) ? $tipo1[$tarefa['projeto_setor']] : '&nbsp;').'</b></td>';
+        echo '<td align="center">'.($tarefa['tarefa_status'] && isset($status[$tarefa['tarefa_status']]) ? $status[$tarefa['tarefa_status']] : '&nbsp;').'</td>';
+        echo '<td>' . ($tarefa['tarefa_inicio'] ? retorna_data($tarefa['tarefa_inicio'], false) : '') . '</td>';
+        echo '<td>' . $pending_days . '</td>';
+        echo '<td>' . prioridade($tarefa['tarefa_prioridade']) . '</td>';
+        echo '</tr>';
+    }
+
+    if (!$qnt) {
+        echo '<tr><td colspan="7"><p>Nenhuma tarefa encontrada</p></td></tr>';
+    }
+    echo '</tbody>';
+    echo '</table>';
+}
+
+if (!$dialogo) {
+    echo '</td></tr></table>';
+    echo estiloFundoCaixa();
+}
+?>
+
+<script type="text/javascript">
+function expandir_colapsar(campo) {
+    var element = document.getElementById(campo);
+    element.style.display = element.style.display ? '' : 'none';
+}
+
+function setData(frm_nome, f_data) {
+    var campo_data = eval('document.' + frm_nome + '.' + f_data);
+    var campo_data_real = eval('document.' + frm_nome + '.' + 'reg_' + f_data);
+    if (campo_data.value.length > 0) {
+        if (parsfimData(campo_data.value) == null) {
+            alert('Data inválida. Redigite, por favor.');
+            campo_data_real.value = '';
+            campo_data.style.backgroundColor = 'red';
+        } else {
+            campo_data_real.value = formatarData(parsfimData(campo_data.value), 'yyyy-MM-dd');
+            campo_data.value = formatarData(parsfimData(campo_data.value), 'dd/MM/Y');
+            campo_data.style.backgroundColor = '';
+        }
+    } else {
+        campo_data_real.value = '';
+    }
+}
+
+function popUsuario(campo) {
+    if (window.parent.gpwebApp) {
+        parent.gpwebApp.popUp('Usuário', 500, 500, 'm=publico&a=selecao_unico_usuario&dialogo=1&chamar_volta=setUsuario&usuario_id=' + document.getElementById('usuario_id').value, window.setUsuario, window);
+    } else {
+        window.open('./index.php?m=publico&a=selecao_unico_usuario&dialogo=1&chamar_volta=setUsuario&usuario_id=' + document.getElementById('usuario_id').value, 'Usuário', 'height=500,width=500,resizable,scrollbars=yes,left=0,top=0');
+    }
+}
+
+function setUsuario(usuario_id, posto, nome, funcao, campo, nome_cia) {
+    document.getElementById('usuario_id').value = usuario_id;
+    document.getElementById('nome_usuario').value = posto + ' ' + nome + (funcao ? ' - ' + funcao : '') + (nome_cia && <?php echo $Aplic->getPref('om_usuario') ?> ? ' - ' + nome_cia : '');
+}
+
+var cal1 = Calendario.setup({
+    trigger: "f_btn1",
+    inputField: "reg_data_inicio",
+    date: <?php echo $data_inicio->format("%Y%m%d") ?>,
+    selection: <?php echo $data_inicio->format("%Y%m%d") ?>,
+    onSelect: function(cal1) {
+        var date = cal1.selection.get();
+        if (date) {
+            date = Calendario.intToDate(date);
+            document.getElementById("data_inicio").value = Calendario.printDate(date, "%d/%m/%Y");
+            document.getElementById("reg_data_inicio").value = Calendario.printDate(date, "%Y-%m-%d");
+        }
+        cal1.hide();
+    }
+});
+
+var cal2 = Calendario.setup({
+    trigger: "f_btn2",
+    inputField: "reg_data_fim",
+    date: <?php echo $data_fim->format("%Y%m%d") ?>,
+    selection: <?php echo $data_fim->format("%Y%m%d") ?>,
+    onSelect: function(cal2) {
+        var date = cal2.selection.get();
+        if (date) {
+            date = Calendario.intToDate(date);
+            document.getElementById("data_fim").value = Calendario.printDate(date, "%d/%m/%Y");
+            document.getElementById("reg_data_fim").value = Calendario.printDate(date, "%Y-%m-%d");
+        }
+        cal2.hide();
+    }
+});
+</script>
+
+<style>
+.filtro-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.filtro-tabela td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.relatorio-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    margin-top: 10px;
+}
+
+.relatorio-tabela th {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    background-color: #333;
+    color: #fff;
+    position: sticky;
+    top: 0;
+}
+
+.relatorio-tabela td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.relatorio-tabela tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.relatorio-tabela tr:hover {
+    background-color: #ddd;
+}
+</style>
